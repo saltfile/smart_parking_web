@@ -65,8 +65,10 @@
           />
         </el-form-item>
         <el-form-item>
+          
           <v-region @values="regionChange"></v-region>
         </el-form-item>
+        <Map/>
         <el-button class="submit-btn" @click="register('regForm')"
           >注册</el-button
         >
@@ -80,19 +82,21 @@
 
 <script>
 import LoginSwitch from "../components/LoginSwitch.vue";
+import Map from "../components/RegisterMap.vue"
 
 export default {
   components: {
+    Map,
     LoginSwitch,
   },
   data() {
     var validatePhone = (rule, value, callback) => {
-      const phoneRule =  /^[1]([3-9])[0-9]{9}$/
+      const phoneRule = /^[1]([3-9])[0-9]{9}$/;
       if (value === "") {
         callback(new Error("请输入手机号"));
       } else {
         if (!phoneRule.test(value)) {
-          callback(new Error("请输入正确的手机号"))
+          callback(new Error("请输入正确的手机号"));
         }
         callback();
       }
@@ -407,3 +411,6 @@ export default {
   background-color: white;
 }
 </style>
+
+      
+   

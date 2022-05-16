@@ -18,6 +18,7 @@ export default {
   methods: {
     ...mapMutations(['setUserimg','setloginState']),
     parkinglogin() {
+      console.log(this.isParking)
       this.setloginState(true)
       this.setUserimg()
       this.$router.push("/");

@@ -6,8 +6,8 @@
 
     </div>
     <div class="desc-warp">
-      <LoginSwitch :loginswitch="loginswitch[0]" :loginimg="loginimg[0]" :isParking="isParking" :loginsuper="loginsuper" />
-      <LoginSwitch :loginswitch="loginswitch[1]" :loginimg="loginimg[1]" :isParking="!isParking" :loginstopad="loginstopad"/>
+      <LoginSwitch :loginswitch="loginswitch[1]" :loginimg="loginimg[0]" :isParking="isParking" :loginsuper="loginsuper" />
+      <LoginSwitch :loginswitch="loginswitch[0]" :loginimg="loginimg[1]" :isParking="!isParking" :loginstopad="loginstopad"/>
   
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
     return {
       isShow: false,
       isParking:true,
-      loginswitch:['超级管理员登录','停车场管理员登录'],
+      loginswitch:['停车场管理员登录','超级管理员登录'],
       loginimg:['log.svg','register.svg']
     };
   },
