@@ -36,7 +36,6 @@ export default {
   methods: {
     getVal(val){
       this.islogin = val
-      console.log('我接收到了值')
     }
   },
   watch:{

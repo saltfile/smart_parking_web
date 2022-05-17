@@ -65,10 +65,10 @@
           />
         </el-form-item>
         <el-form-item>
-          
           <v-region @values="regionChange"></v-region>
+          <el-button icon="el-icon-check" circle style="margin-left:10px" @click="searchMap"></el-button>
         </el-form-item>
-        <Map/>
+        <Map :optionCity="regForm.optionCity" />
         <el-button class="submit-btn" @click="register('regForm')"
           >注册</el-button
         >
@@ -82,7 +82,7 @@
 
 <script>
 import LoginSwitch from "../components/LoginSwitch.vue";
-import Map from "../components/RegisterMap.vue"
+import Map from "../components/RegisterMap.vue";
 
 export default {
   components: {
@@ -256,9 +256,12 @@ export default {
       if (data.province && data.city && data.area) {
         this.regForm.optionCity =
           data.province.value + data.city.value + data.area.value;
-        // console.log(this.optionCity)
+        console.log(this.regForm.optionCity);
       }
     },
+    searchMap(){
+      this.$bus.$emit("onSearchResult")
+    }
   },
   mounted() {
     this.createCode();

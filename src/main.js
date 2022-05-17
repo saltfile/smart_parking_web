@@ -11,6 +11,9 @@ import store from './store'
 
 //高德地图
 import VueAMap from 'vue-amap'; 
+import {VueJsonp} from 'vue-jsonp'
+
+Vue.use(VueJsonp)
 
 Vue.use(vRegion)
 

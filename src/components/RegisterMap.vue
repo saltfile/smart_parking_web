@@ -1,124 +1,160 @@
 <template>
-  <div id="map-container">地图</div>
+  <div class="amap-page-container" style="width: 30vw; height: 20vh">
+    <el-amap
+      ref="map"
+      vid="amapDemo"
+      :amap-manager="amapManager"
+      :center="center"
+      :zoom="zoom"
+      :plugin="plugin"
+      :events="events"
+      class="amap-demo"
+    >
+    </el-amap>
+    <!-- <p>{{ address }}</p>
+    <p>{{ center }}</p> -->
+  </div>
 </template>
-
 <script>
+import { AMapManager } from "vue-amap";
+let amapManager = new AMapManager();
 export default {
+  props: ["optionCity"],
+  mounted() {
+      this.$bus.$on("onSearchResult",this.onSearchResult)
+  },
   data() {
+    const self = this;
     return {
-      map: null,
-      markers: [],
-      markersPosition: [],
-      geoCoder: null,
+      searchOption: {
+        citylimit: false, //搜索范围//限制搜索范围
+      },
+      input: "",
+      lng: "",
+      lat: "",
+      address: "",
+      marker: "",
+      amapManager,
+      zoom: 12,
+      center: [117.201509, 39.085318],
+      events: {
+        init: (o) => {
+          o.getCity((result) => {
+          });
+        },
+        click: (e) => {
+          self.lng = e.lnglat.lng;
+          self.lat = e.lnglat.lat;
+          self.center = [self.lng, self.lat];
+
+          let o = amapManager.getMap();
+          if (!self.marker) {
+            self.marker = new AMap.Marker({
+              position: e.lnglat,
+            });
+            self.marker.setMap(o);
+          }
+          self.marker.setPosition(e.lnglat);
+          let geocoder = new AMap.Geocoder({});
+
+          geocoder.getAddress(e.lnglat, function (status, result) {
+            if (status === "complete" && result.regeocode) {
+              self.address = result.regeocode.formattedAddress;
+              console.log(self.address);
+            } else {
+              console.log("根据经纬度查询地址失败");
+            }
+          });
+        },
+      },
+      plugin: [
+        {
+          pName: "Geolocation",
+          events: {
+            init(o) {
+              // o 是高德地图定位插件实例
+              o.getCurrentPosition((status, result) => {
+                // console.log(JSON.stringify(result));
+                if (result && result.position) {
+                  self.lng = result.position.lng;
+                  self.lat = result.position.lat;
+                  self.address = result.formattedAddress;
+                  self.center = [self.lng, self.lat];
+                  //   console.log(self.center, 99666);
+                  let o = amapManager.getMap();
+                  if (!self.marker) {
+                    self.marker = new AMap.Marker({
+                      position: self.center,
+                    });
+                    self.marker.setMap(o);
+                  }
+                  self.marker.setPosition(self.center);
+                }
+              });
+            },
+          },
+        },
+      ],
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.mapInit();
-    }, 1000);
-  },
   methods: {
-    mapInit() {
-      //   eslint-disable-next-line no-undef
-      this.map = new AMap.Map("map-container", {
-        zoom: 11, // 级别
-        // center: [116.397428, 39.90923], // 中心点坐标
-        // layers: [ // 使用多个图层
-        //   // 卫星
-        //   new AMap.TileLayer.Satellite(),
-        //   // 路网
-        //   new AMap.TileLayer.RoadNet()
-        // ],
-        resizeEnable: true,
-        // viewMode: '3D'// 使用3D视图
-      });
-
-      // eslint-disable-next-line no-undef
-      this.geoCoder = new AMap.Geocoder();
-
-      this.handlerMapClick();
-    },
-    handlerMapClick() {
-      this.map.on("click", (e) => {
-        // 点击坐标
-        this.markersPosition = [e.lnglat.lng, e.lnglat.lat];
-        console.log("经纬度", e.lnglat.lng, e.lnglat.lat);
-        this.removeMarker();
-        // 设置新的标记
-        this.setMapMarker();
-
-        // eslint-disable-next-line no-undef
-        // 根据坐标获取位置信息
-        this.geoCoder.getAddress(this.markersPosition, (status, result) => {
-          if (status === "complete" && result.regeocode) {
-            this.address = result.regeocode.formattedAddress;
-            console.log("点击位置信息：", result.regeocode.formattedAddress);
-            // id
-            let adcode = result.regeocode.addressComponent.adcode;
-            //   let reg = /.+?(省|市|自治区|自治州|县|区)/g
-            let provinceId = parseInt(adcode.substr(0, 2) + "0000");
-            let cityId = parseInt(adcode.substr(0, 4) + "00");
-            let areaId = adcode;
-            console.log("点击位置的省市区id：", provinceId, cityId, areaId);
+    onSearchResult() {
+      var that = this;
+      AMap.plugin("AMap.Geocoder", function () {
+        var geocoder = new AMap.Geocoder({
+          // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+          city: "",
+        });
+        var address = that.optionCity;
+        geocoder.getLocation(address, function (status, result) {
+          if (address) {
+            var lnglat = result.geocodes[0].location;
+            console.log(lnglat);
+            that.lng = lnglat.lng;
+            that.lat = lnglat.lat;
+            that.center = [that.lng, that.lat];
+            let o = amapManager.getMap();
+            if (!that.marker) {
+              that.marker = new AMap.Marker({
+                position: that.center,
+              });
+              that.marker.setMap(o);
+            }
+            that.marker.setPosition(that.center);
+          } else {
+            console.log("根据地址查询位置失败");
           }
         });
+        // 使用geocoder做地理/逆地理编码
       });
-    },
-    // 设置点击位置的标记
-    setMapMarker() {
-      let marker = new AMap.Marker({
-        map: this.map,
-        position: this.markersPosition,
-      });
-      this.markers.push(marker);
-    },
-    // addMarker() {
-    //   //   经度 纬度
-    //   let lng = Math.random() * 135.05 + 73.3;
-    //   let lat = Math.random() * 53.33 + 3.51;
-    //   console.log("添加标记", [lng, lat]);
-    //   // 添加标记
-    //   this.map.setFitView();
-
-    //   let marker = new AMap.Marker({
-    //     map: this.map,
-    //     position: [lng, lat],
-    //     // content: markerContent
-    //     // eslint-disable-next-line
-    //     // offset: new AMap.Pixel(-13, -30)
-    //   });
-    //   // 将 markers 添加到地图
-    //   this.markers.push(marker);
-
-    //   this.map.setFitView()`在这里插入代码片`;
-
-    //   // 鼠标点击marker弹出自定义的信息窗体
-    //   // eslint-disable-next-line no-undef
-    //   AMap.event.addListener(marker, "click", function (e) {
-    //     console.log("点击marker", e);
-    //   });
-    // },
-    // 删除之前后的标记点
-    removeMarker() {
-      if (this.markers) {
-        this.map.remove(this.markers);
-      }
+      //   if (pois.length > 0) {
+      //     let { lng, lat, name, location } = pois[0];
+      //     let center = [lng, lat];
+      //     this.lng = lng;
+      //     this.lat = lat;
+      //     this.center = [lng, lat];
+      //     let o = amapManager.getMap();
+      //     if (!this.marker) {
+      //       this.marker = new AMap.Marker({
+      //         position: center,
+      //       });
+      //       this.marker.setMap(o);
+      //     }
+      //     this.marker.setPosition(center);
+      //   }
+      //   console.log(this.center[0], this.center[1]);
     },
   },
+
 };
 </script>
-
-<style scoped >
-#map-container {
-  width: 40vw;
-  height: 25vh;
+<style scoped>
+.search-box {
+  position: absolute;
+  top: 25px;
+  left: 20px;
 }
-.amap-logo {
-  display: none;
-  opacity: 0 !important;
-}
-.amap-copyright {
-  opacity: 0;
+.amap-page-container {
+  position: relative;
 }
 </style>
-
