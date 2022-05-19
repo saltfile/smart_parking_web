@@ -9,6 +9,8 @@ import HomeFourth from '../pages/HomeFourth.vue'
 import HomeThird from '../pages/HomeThird.vue'
 import HomeSecond from '../pages/HomeSecond.vue'
 import register from '../pages/RegisterPage.vue'
+import superadhome from '../pages/SuperAdpage.vue'
+import supermap from '../pages/MapPage.vue'
 
 //创建并暴露一个路由器
 export default new VueRouter({
@@ -42,6 +44,27 @@ export default new VueRouter({
 		{
 			path: '/register',
 			component: register
+		}, {
+			path: '/superhome',
+			component: superadhome,
+			children: [
+				{
+					path: '/superhome',
+					component: main
+				},
+				{
+					path: '/superhome/HomeThird',
+					component: HomeThird
+				},
+				{
+					path: '/superhome/HomeFourth',
+					component: HomeFourth
+				},
+				{
+					path: '/superhome/map',
+					component: supermap
+				}
+			]
 		}
 	]
 })

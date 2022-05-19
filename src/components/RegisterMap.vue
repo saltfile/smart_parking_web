@@ -22,6 +22,7 @@ export default {
   props: ["optionCity"],
   mounted() {
       this.$bus.$on("onSearchResult",this.onSearchResult)
+      this.$bus.$on('sendCenter')
   },
   data() {
     const self = this;
@@ -127,25 +128,9 @@ export default {
         });
         // 使用geocoder做地理/逆地理编码
       });
-      //   if (pois.length > 0) {
-      //     let { lng, lat, name, location } = pois[0];
-      //     let center = [lng, lat];
-      //     this.lng = lng;
-      //     this.lat = lat;
-      //     this.center = [lng, lat];
-      //     let o = amapManager.getMap();
-      //     if (!this.marker) {
-      //       this.marker = new AMap.Marker({
-      //         position: center,
-      //       });
-      //       this.marker.setMap(o);
-      //     }
-      //     this.marker.setPosition(center);
-      //   }
-      //   console.log(this.center[0], this.center[1]);
     },
   },
-
+  
 };
 </script>
 <style scoped>

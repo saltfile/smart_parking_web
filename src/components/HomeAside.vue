@@ -19,9 +19,9 @@
       class="el-menu-vertical-demo"
       text-color="#858585"
       active-text-color="#A96DFB"
-      @select="switchTo(i + 1)"
+      @select="switchTo(i)"
     >
-      <el-menu-item :index="String(i + 1)">
+      <el-menu-item :index="String(i)">
         <template slot="title">
           <i
             class="icon"
@@ -46,32 +46,33 @@
 
 <script>
 export default {
+  props: ["menulist", "routers"],
   data() {
     return {
-      activeIndex: "1",
-      menulist: [
-        { name: "车位流量表", icon: "el-icon-s-data" },
-        { name: "停车场监控", icon: "el-icon-video-camera" },
-        { name: "车流记录", icon: "el-icon-edit" },
-        { name: "订单记录", icon: "el-icon-shopping-bag-1" },
-      ],
-      routers: ["/", "HomeSecond", "/HomeThird","/HomeFourth"],
+      activeIndex: this.getindex(),
     };
   },
   methods: {
     switchTo(index) {
       this.activeIndex = String(index);
-      this.$router.push(this.routers[index - 1]);
+      this.$router.push(this.routers[index]);
+    },
+    getindex() {
+      for (let i = 0; i < this.routers.length; i++) {
+        if (this.$route.path == this.routers[i]) {
+          return String(i);
+        }
+      }
     },
   },
   watch: {
-    $route(){
-      for(let i=0;i<this.routers.length;i++){
-        if(this.$route.path==this.routers[i]){
-          this.activeIndex = String(i+1);
+    $route() {
+      for (let i = 0; i < this.routers.length; i++) {
+        if (this.$route.path == this.routers[i]) {
+          this.activeIndex = String(i);
         }
       }
-    }
+    },
   },
 };
 </script>
