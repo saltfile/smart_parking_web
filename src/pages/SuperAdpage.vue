@@ -21,9 +21,10 @@ export default {
       menulist: [
         { name: "车位流量表", icon: "el-icon-s-data" },
         { name: "停车场查询", icon: "el-icon-edit" },
-        { name: "订单记录", icon: "el-icon-shopping-bag-1" },
+        { name: "停车场信息", icon: "el-icon-shopping-bag-1" },
+        { name: "订单信息", icon: "el-icon-s-finance" },
       ],
-      routers: ["/superhome", "/superhome/map", "/superhome/HomeFourth"],
+      routers: ["/superhome", "/superhome/map", "/superhome/table","/superhome/order"],
     };
   },
 };

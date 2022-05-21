@@ -4,29 +4,52 @@
     <input placeholder="用户名" />
     <input type="password" placeholder="密码" />
     <div class="submit-btn" @click.stop="parkinglogin">立即登录</div>
-    <a href="javascript:void(0);" v-if="isParking" @click="gotoRegister">还没有账号？立即注册</a>
+    <a href="javascript:void(0);" v-if="isParking" @click="gotoRegister"
+      >还没有账号？立即注册</a
+    >
   </form>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 export default {
   props: ["loginswitch", "isParking"],
   data() {
     return {};
   },
   methods: {
-    ...mapMutations(['setUserimg','setloginState']),
+    ...mapMutations(["setUserimg", "setloginState", "setloginAd"]),
+    ...mapGetters(["getloginAd","getToken"]),
     parkinglogin() {
-      console.log(this.isParking)
-      this.setloginState(true)
-      this.setUserimg()
-      this.$router.push("/");
+      this.setloginState(true);
+      if (this.isParking) {
+        this.setloginAd("ParkingAd");
+        // localStorage.clear();
+        // localStorage.setItem("info", 1);
+        // localStorage["flag"] = 1;
+        // // localStorage.setItem('flag',1)
+        // sessionStorage.clear();
+        // // sessionStorage['userid']=JSON.stringify(res.data.userInfo.id)
+        // sessionStorage.setItem("userid", JSON.stringify(this.getUser.id));
+        // sessionStorage["token"] = JSON.stringify(this.getToken());
+        // this.$message({
+        //   message: "登录成功",
+        //   type: "success",
+        // });
+        this.$router.push("/");
+      } else {
+        this.setloginAd("SuperAd");
+        this.$router.push("/superhome");
+      }
+      this.setUserimg();
     },
-    gotoRegister(){
+    gotoRegister() {
       this.$router.push("/register");
-    }
+    },
   },
+  computed:{
+    ...mapGetters(["getUser"]),
+  }
 };
 </script>
 

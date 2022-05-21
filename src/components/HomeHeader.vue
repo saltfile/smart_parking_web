@@ -29,7 +29,15 @@
           @keyup.enter="getvalue(input)"
         >
           <el-input
+            v-if="getloginAd == 'ParkingAd'"
             placeholder="查询车位信息（车位编号）"
+            v-model="input"
+            clearable
+          >
+          </el-input>
+          <el-input
+            v-else
+            placeholder="查询停车场城市"
             v-model="input"
             clearable
           >
@@ -64,7 +72,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <button @click="setloginState(!getLogin)">dianwo</button>
       </div>
     </div>
   </div>
@@ -81,24 +88,25 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setUser", "setIsLogin", "setloginState","setUserimg"]),
+    ...mapMutations(["setUser", "setIsLogin", "setloginState", "setUserimg"]),
     handleCommand(command) {
       if (command == "a") this.$router.push("/login");
       else if (command == "b") this.$router.push("/register");
-      else if (command == "c") this.setloginState(false)
+      else if (command == "c") this.setloginState(false);
     },
     search() {
       this.isSearch = !this.isSearch;
     },
     switchpage() {
-      this.$router.push("/HomeThird");
+      if(this.getloginAd=="ParkingAd") this.$router.push("/HomeThird");
+      else this.$router.push( "/superhome/table");
     },
     getvalue(input) {
       this.$bus.$emit("getSearchVal", input);
     },
   },
   computed: {
-    ...mapGetters(["getUser", "getLogin","getUserimg"]),
+    ...mapGetters(["getUser", "getLogin", "getUserimg", "getloginAd"]),
   },
 };
 </script>

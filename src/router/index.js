@@ -11,6 +11,7 @@ import HomeSecond from '../pages/HomeSecond.vue'
 import register from '../pages/RegisterPage.vue'
 import superadhome from '../pages/SuperAdpage.vue'
 import supermap from '../pages/MapPage.vue'
+import supertable from '../pages/SuperAdTable.vue'
 
 //创建并暴露一个路由器
 export default new VueRouter({
@@ -53,16 +54,15 @@ export default new VueRouter({
 					component: main
 				},
 				{
-					path: '/superhome/HomeThird',
-					component: HomeThird
-				},
-				{
-					path: '/superhome/HomeFourth',
-					component: HomeFourth
+					path: '/superhome/table',
+					component: supertable
 				},
 				{
 					path: '/superhome/map',
 					component: supermap
+				},{
+					path: '/superhome/order',
+					component: HomeFourth
 				}
 			]
 		}

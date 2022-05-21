@@ -1,11 +1,12 @@
 <template>
   <div class="main">
     <div class="mainitem">
-      <WelcomeCard v-if="islogin"/>
-      <WelcomeCard v-else />
-      <MainCard :index="0" />
+      <WelcomeCard />
+      <MainCard v-if="getloginAd() !== 'ParkingAd'" :index="1" />
+      <MainCard v-else :index="0" />
       <MainCard :index="2" />
-      <Echart />
+      <Echart v-if="getloginAd() !== 'ParkingAd'" :ParkingAd="getParkingAd()"/>
+      <Echart v-else :ParkingAd="getParkingAd()"/>
       <MoneyCard />
     </div>
   </div>
@@ -16,6 +17,7 @@ import MainCard from "../components/MainCard.vue";
 import Echart from "../components/EchartCard.vue";
 import MoneyCard from "@/components/MoneyCard.vue";
 import WelcomeCard from "@/components/WelcomeCard.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     MainCard,
@@ -34,12 +36,14 @@ export default {
     this.$bus.$on("getVal", this.getVal);
   },
   methods: {
-    getVal(val){
-      this.islogin = val
+    ...mapGetters(["getloginAd"]),
+    getVal(val) {
+      this.islogin = val;
+    },
+    getParkingAd(){
+      return this.getloginAd()
     }
   },
-  watch:{
-  }
 };
 </script>
 

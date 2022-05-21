@@ -5,7 +5,15 @@ export default {
         },
         setUserimg(state) {
             state.user.index = Math.round(Math.random() * 9);
-        }
+        },
+        setloginAd(state, value) {
+            state.loginAd = value
+        },
+        setToken(state, token) {
+            state.token = token
+            localStorage.token = token //同步存储token至localStorage
+        },
+
     },
     getters: {
         getUser(state) {
@@ -16,11 +24,21 @@ export default {
         },
         getUserimg(state) {
             return state.user.index
+        },
+        getloginAd(state) {
+            return state.loginAd
+        },
+        getToken(state) {
+            if (!state.token) {
+                state.token = localStorage.getItem('token')
+            }
+            return state.token
         }
     },
     state: {
         user: {
             name: 'zxx',
+            id: "123",
             index: 0,
             img: [
                 "01.png",
@@ -35,6 +53,8 @@ export default {
                 "10.png",
             ],
         },
-        islogin: true,
+        token: "111",
+        islogin: false,
+        loginAd: "ParkingAd"
     }
 }

@@ -1,26 +1,15 @@
 <template>
   <div class="container">
+    <TableAdd :addtable="addtable" />
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
       "
       :stripe="true"
       :fit="true"
-      :border="true"
       :row-key="getRowkey"
     >
-      <TableColumn
-        :columnsprops="columnsprops"
-        :editRow="editRow"
-        :pay="ispay"
-      />
-      <TableEdit
-        v-if="getloginAd == 'ParkingAd'"
-        :editRow="editRow"
-        :handleSave="handleSave"
-        :handleDelete="handleDelete"
-        :handleEdit="handleEdit"
-      />
+      <TableColumn :columnsprops="columnsprops" :editRow="editRow" />
     </el-table>
     <TablePagination
       :pageSize="pageSize"
@@ -31,60 +20,57 @@
   </div>
 </template>
 <script>
+import TableAdd from "../components/TableAdd.vue";
 import TableColumn from "@/components/TableColumn.vue";
-import TableEdit from "@/components/TableEdit.vue";
-import TablePagination from "@/components/TablePagination.vue";
-import { mapGetters } from "vuex";
 
+import TablePagination from "@/components/TablePagination.vue";
+
+import { nanoid } from "nanoid";
 export default {
   components: {
+    TableAdd,
     TableColumn,
-    TableEdit,
     TablePagination,
   },
   data() {
     return {
-      ispay: true,
       searchVal: "",
       isSave: true,
       isDelete: true,
       pageSize: 18,
       currentPage: 1,
       editRow: null,
+    //   （停车场省市区，停车场名，停车场管理员用户名，停车场车位数）
       columnsprops: [
-        { prop: "id", label: "车牌号" },
-        { prop: "phone", label: "手机号" },
-        { prop: "start", label: "起始时间" },
-        { prop: "leave", label: "离开时间" },
-        { prop: "state", label: "状态" },
-        { prop: "pay", label: "支付金额" },
-        { prop: "delaybton", label: "延时按钮" },
-        { prop: "cancelbton", label: "取消按钮" },
+        { prop: "id", label: "停车场编号" },
+        { prop: "city", label: "城市" },
+        { prop: "userad", label: "停车场管理员用户名" },
+        { prop: "carnumber", label: "停车场车位数" },
       ],
       tableData: [
         {
-          phone: 123456,
-          id: "津2020",
-          start: "2022-04-19 13:23:28",
-          leave: "2022-04-19 18:13:48",
-          state: "进行中",
-          pay: "40",
+          id: nanoid(),
+          city: "天津",
+          userad: "ssss",
+          carnumber: 360,
         },
         {
-          phone: 123456,
-          id: "津2021",
-          start: "2022-04-19 13:23:28",
-          leave: "2022-04-19 18:13:48",
-          state: "已完成",
-          pay: "40",
+          id: nanoid(),
+          city: "天津",
+          userad: "ssss",
+          carnumber: 360,
         },
         {
-          phone: 123456,
-          id: "津1021",
-          start: "2022-04-19 13:23:28",
-          leave: "2022-04-19 18:13:48",
-          state: "未支付",
-          pay: "40",
+          id: nanoid(),
+          city: "天津",
+          userad: "ssss",
+          carnumber: 360,
+        },
+        {
+          id: nanoid(),
+          city: "天津",
+          userad: "ssss",
+          carnumber: 360,
         },
       ],
     };
@@ -107,6 +93,17 @@ export default {
     getRowkey(row) {
       return row.id;
     },
+    addtable() {
+      const obj = {
+        id: nanoid(),
+        city: "",
+        free: "",
+        price: "",
+        latitude: "",
+        longitude: "",
+      };
+      this.tableData.push(obj);
+    },
     handleEdit(row) {
       if (this.isSave !== false || this.isDelete !== false) {
         this.editRow = row;
@@ -127,12 +124,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getloginAd"]),
     filterData() {
       return this.tableData.filter((p) => {
-        return (
-          p.id.indexOf(this.searchVal) !== -1 
-        );
+        return p.city.indexOf(this.searchVal) !== -1;
       });
     },
   },
