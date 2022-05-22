@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 1000px; border: 1px solid #eee">
+  <el-container style="height:100%;width:100%;border: 1px solid #eee">
     <Aside :menulist="menulist" :routers="routers" />
     <el-container style="display: flex !important; flex-direction: column">
       <Header />
@@ -36,6 +36,6 @@ export default {
 * {
   margin: 0;
   position: relative;
-  height: 1100px;
+  /* height: 1100px; */
 }
 </style>

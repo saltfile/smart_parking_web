@@ -49,7 +49,6 @@ export default {
 
 <style scoped>
 .main {
-  min-width: 1400px;
   width: 100%;
   height: 100%;
   margin-top: 30px;
@@ -63,6 +62,6 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 </style>

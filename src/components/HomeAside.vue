@@ -81,7 +81,7 @@ export default {
 .el-aside {
   background-color: white;
   margin-right: 30px;
-  width: 290px !important;
+  width: 290px;
   border-radius: 10px;
   box-shadow: 0.1px 0px 0.3px rgba(0, 0, 0, 0.024),
     0.3px 0.1px 0.8px rgba(0, 0, 0, 0.035),
