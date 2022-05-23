@@ -7,7 +7,7 @@
     <div class="content" v-if="loginswitch">
       <button id="sign-up-btn" @click="switchlogin">{{ loginswitch }}</button>
     </div>
-    <img :src="require(`../assets/${loginimg}`)" alt="" />
+    <img :src="require(`../assets/${loginimg}`)" alt="" v-if="loginimg"/>
   </div>
 </template>
 <script>

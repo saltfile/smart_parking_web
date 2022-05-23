@@ -66,7 +66,12 @@
         </el-form-item>
         <el-form-item>
           <v-region @values="regionChange"></v-region>
-          <el-button icon="el-icon-check" circle style="margin-left:10px" @click="searchMap"></el-button>
+          <el-button
+            icon="el-icon-check"
+            circle
+            style="margin-left: 10px"
+            @click="searchMap"
+          ></el-button>
         </el-form-item>
         <Map :optionCity="regForm.optionCity" />
         <el-button class="submit-btn" @click="register('regForm')"
@@ -259,9 +264,9 @@ export default {
         console.log(this.regForm.optionCity);
       }
     },
-    searchMap(){
-      this.$bus.$emit("onSearchResult")
-    }
+    searchMap() {
+      this.$bus.$emit("onSearchResult");
+    },
   },
   mounted() {
     this.createCode();
@@ -293,7 +298,7 @@ export default {
 }
 
 .form-warp {
-  width: 50%;
+  width: 70%;
   position: absolute;
   z-index: 5;
   left: 75%;
@@ -371,7 +376,9 @@ export default {
   background-color: #6267f513;
   border: none;
 }
-
+.el-form-item {
+  margin-bottom: 8px;
+}
 .el-input {
   min-width: 300px;
 }

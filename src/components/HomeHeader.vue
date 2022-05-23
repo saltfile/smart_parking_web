@@ -92,14 +92,17 @@ export default {
     handleCommand(command) {
       if (command == "a") this.$router.push("/login");
       else if (command == "b") this.$router.push("/register");
-      else if (command == "c") this.setloginState(false);
+      else if (command == "c") {
+        this.setloginState(false);
+        this.$router.push("/login");
+      }
     },
     search() {
       this.isSearch = !this.isSearch;
     },
     switchpage() {
-      if(this.getloginAd=="ParkingAd") this.$router.push("/HomeThird");
-      else this.$router.push( "/superhome/table");
+      if (this.getloginAd == "ParkingAd") this.$router.push("/HomeThird");
+      else this.$router.push("/superhome/table");
     },
     getvalue(input) {
       this.$bus.$emit("getSearchVal", input);
