@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       menulist: [
-        { name: "车位流量表", icon: "el-icon-s-data" },
-        { name: "停车场查询", icon: "el-icon-edit" },
+        { name: "主页", icon: "el-icon-s-data" },
+        { name: "停车场分布图", icon: "el-icon-edit" },
         { name: "停车场信息", icon: "el-icon-shopping-bag-1" },
         { name: "订单信息", icon: "el-icon-s-finance" },
       ],

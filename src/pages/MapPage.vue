@@ -20,7 +20,8 @@
         :visible="window.visible"
         :content="window.content"
         :offset="window.offset"
-      ></el-amap-info-window>
+        :events="window.events"
+      />
     </el-amap>
   </div>
 </template>
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       zoom: 6,
-      center: [117.037107,35.71569],
+      center: [117.037107, 35.71569],
       showIndoorMap: false,
       mapStyle: "amap://styles/light", //修改地图的背景颜色
       markers: [],
@@ -53,7 +54,7 @@ export default {
           Space: 240,
         },
         {
-         lng: 121.126757,
+          lng: 121.126757,
           lat: 31.140653,
           stationName: "xxx停车场",
           stationAddress: "上海市牛头山路东100m", //站址
@@ -61,7 +62,7 @@ export default {
           Space: 240,
         },
         {
-         lng: 121.126757,
+          lng: 121.126757,
           lat: 31.140653,
           stationName: "xxx停车场",
           stationAddress: "上海市牛头山路东100m", //站址
@@ -69,7 +70,7 @@ export default {
           Space: 240,
         },
         {
-         lng: 113.672544,
+          lng: 113.672544,
           lat: 37.138809,
           stationName: "xxx停车场",
           stationAddress: "上海市牛头山路东100m", //站址
@@ -77,7 +78,7 @@ export default {
           Space: 240,
         },
         {
-         lng: 112.065793,
+          lng: 112.065793,
           lat: 38.057122,
           stationName: "xxx停车场",
           stationAddress: "上海市牛头山路东100m", //站址
@@ -90,13 +91,15 @@ export default {
           position: [item.lng, item.lat],
           events: {
             click() {
-              that.windows.forEach((window) => {
-                window.visible = false; //关闭窗体
-              });
               that.window = that.windows[index];
               that.$nextTick(() => {
                 that.window.visible = true; //点击点坐标，出现信息窗体
               });
+            },
+            mouseout() {
+              if (that.window.visible) {
+                that.closeWindow();
+              }
             },
           },
         });
@@ -133,6 +136,10 @@ export default {
       //生成弹窗
       this.windows = windows;
     },
+    closeWindow() {
+      this.window.visible = false;
+    },
+
   },
   mounted() {
     setTimeout(() => {
@@ -141,3 +148,6 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

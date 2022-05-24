@@ -25,18 +25,15 @@
 </template>
 <script>
 import TableColumn from "@/components/TableColumn.vue";
-// import TableEdit from "@/components/TableEdit.vue";
 import TablePagination from "@/components/TablePagination.vue";
 import { mapGetters } from "vuex";
 import { nanoid } from "nanoid";
 export default {
-  
   components: {
     TableColumn,
-    // TableEdit,
     TablePagination,
   },
-  
+
   data() {
     return {
       ispay: true,
@@ -49,17 +46,19 @@ export default {
       columnsprops: [
         { prop: "id", label: "车牌号" },
         { prop: "orderid", label: "订单编号" },
+        { prop: "parkingid", label: "停车场编号" },
+        { prop: "parkingname", label: "停车场名" },
         { prop: "phone", label: "手机号" },
         { prop: "start", label: "起始时间" },
         { prop: "leave", label: "离开时间" },
         { prop: "state", label: "状态" },
         { prop: "pay", label: "支付金额" },
-        { prop: "delaybton", label: "延时按钮" },
-        { prop: "cancelbton", label: "取消按钮" },
       ],
       tableData: [
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
+          parkingid:nanoid(),
+          parkingname:"xxx",
           phone: 123456,
           id: "津2020",
           start: "2022-04-19 13:23:28",
@@ -68,7 +67,9 @@ export default {
           pay: "40",
         },
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
+          parkingid:nanoid(),
+          parkingname:"xxx",
           phone: 123456,
           id: "津2021",
           start: "2022-04-19 13:23:28",
@@ -77,7 +78,9 @@ export default {
           pay: "40",
         },
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
+          parkingid:nanoid(),
+          parkingname:"xxx",
           phone: 123456,
           id: "津1021",
           start: "2022-04-19 13:23:28",
@@ -106,32 +109,12 @@ export default {
     getRowkey(row) {
       return row.id;
     },
-    // handleEdit(row) {
-    //   if (this.isSave !== false || this.isDelete !== false) {
-    //     this.editRow = row;
-    //     this.isSave = false;
-    //     this.isDelete = false;
-    //   } else {
-    //     alert("还没有保存");
-    //   }
-    // },
-    // handleSave() {
-    //   this.editRow = null;
-    //   this.isSave = true;
-    // },
-    // handleDelete(id) {
-    //   this.tableData = this.tableData.filter((data) => data.id !== id);
-    //   this.editRow = null;
-    //   this.isDelete = true;
-    // },
   },
   computed: {
     ...mapGetters(["getloginAd"]),
     filterData() {
       return this.tableData.filter((p) => {
-        return (
-          p.id.indexOf(this.searchVal) !== -1 
-        );
+        return p.id.indexOf(this.searchVal) !== -1;
       });
     },
   },

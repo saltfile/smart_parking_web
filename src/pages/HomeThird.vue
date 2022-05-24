@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <TableAdd :addtable="addtable" />
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -10,12 +9,6 @@
       :row-key="getRowkey"
     >
       <TableColumn :columnsprops="columnsprops" :editRow="editRow" />
-      <TableEdit
-        :editRow="editRow"
-        :handleSave="handleSave"
-        :handleDelete="handleDelete"
-        :handleEdit="handleEdit"
-      />
     </el-table>
     <TablePagination
       :pageSize="pageSize"
@@ -26,17 +19,13 @@
   </div>
 </template>
 <script>
-import TableAdd from "../components/TableAdd.vue";
 import TableColumn from "@/components/TableColumn.vue";
-import TableEdit from "@/components/TableEdit.vue";
 import TablePagination from "@/components/TablePagination.vue";
 
 import { nanoid } from "nanoid";
 export default {
   components: {
-    TableAdd,
     TableColumn,
-    TableEdit,
     TablePagination,
   },
   data() {
@@ -48,45 +37,46 @@ export default {
       currentPage: 1,
       editRow: null,
       columnsprops: [
-        { prop: "id", label: "车位编号" },
         { prop: "city", label: "城市" },
-        { prop: "free", label: "是否免费" },
+        { prop: "entertime", label: "进入时间" },
+        { prop: "leavetime", label: "离开时间" },
         { prop: "price", label: "价格" },
-        { prop: "latitude", label: "纬度" },
-        { prop: "longitude", label: "经度" },
       ],
       tableData: [
         {
           id: nanoid(),
           city: "天津",
-          free: "true",
           price: "25",
-          latitude: "15",
-          longitude: "20",
+          entertime: "2022-05-20 20:14:21",
+          leavetime: "2022-05-10 21:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
-          free: "true",
           price: "25",
-          latitude: "15",
-          longitude: "20",
+          entertime: "2022-05-20 20:14:21",
+          leavetime: "2022-05-10 21:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
-          free: "true",
           price: "25",
-          latitude: "15",
-          longitude: "20",
+          entertime: "2022-05-20 20:14:21",
+          leavetime: "2022-05-10 21:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
-          free: "true",
           price: "25",
-          latitude: "15",
-          longitude: "20",
+          entertime: "2022-05-20 20:14:21",
+          leavetime: "2022-05-10 21:20:34",
+        },
+        {
+          id: nanoid(),
+          city: "天津",
+          price: "25",
+          entertime: "2022-05-20 20:14:21",
+          leavetime: "2022-05-10 21:20:34",
         },
       ],
     };
@@ -109,40 +99,11 @@ export default {
     getRowkey(row) {
       return row.id;
     },
-    addtable() {
-      const obj = {
-        id: nanoid(),
-        city: "",
-        free: "",
-        price: "",
-        latitude: "",
-        longitude: "",
-      };
-      this.tableData.push(obj);
-    },
-    handleEdit(row) {
-      if (this.isSave !== false || this.isDelete !== false) {
-        this.editRow = row;
-        this.isSave = false;
-        this.isDelete = false;
-      } else {
-        alert("还没有保存");
-      }
-    },
-    handleSave() {
-      this.editRow = null;
-      this.isSave = true;
-    },
-    handleDelete(id) {
-      this.tableData = this.tableData.filter((data) => data.id !== id);
-      this.editRow = null;
-      this.isDelete = true;
-    },
   },
   computed: {
     filterData() {
       return this.tableData.filter((p) => {
-        return p.id.indexOf(this.searchVal) !== -1;
+        return p.city.indexOf(this.searchVal) !== -1;
       });
     },
   },

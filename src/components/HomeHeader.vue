@@ -29,14 +29,6 @@
           @keyup.enter="getvalue(input)"
         >
           <el-input
-            v-if="getloginAd == 'ParkingAd'"
-            placeholder="查询车位信息（车位编号）"
-            v-model="input"
-            clearable
-          >
-          </el-input>
-          <el-input
-            v-else
             placeholder="查询停车场城市"
             v-model="input"
             clearable

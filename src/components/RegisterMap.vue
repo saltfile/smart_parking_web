@@ -1,5 +1,5 @@
 <template>
-  <div class="amap-page-container" style="width: 30vw; height: 20vh">
+  <div class="amap-page-container" style="width: 30vw; height: 100%">
     <el-amap
       ref="map"
       vid="amapDemo"
@@ -126,7 +126,6 @@ export default {
             console.log("根据地址查询位置失败");
           }
         });
-        // 使用geocoder做地理/逆地理编码
       });
     },
   },

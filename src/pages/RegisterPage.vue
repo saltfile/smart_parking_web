@@ -70,14 +70,23 @@
             icon="el-icon-check"
             circle
             style="margin-left: 10px"
-            @click="searchMap"
+            @click="searchMap(), (drawer = true)"
           ></el-button>
         </el-form-item>
-        <Map :optionCity="regForm.optionCity" />
+
         <el-button class="submit-btn" @click="register('regForm')"
           >注册</el-button
         >
       </el-form>
+      <el-drawer
+        title="我是标题"
+        :visible.sync="drawer"
+        :with-header="false"
+        :append-to-body="true"
+        :modal-append-to-body="false"
+      >
+        <Map :optionCity="regForm.optionCity" />
+      </el-drawer>
     </div>
     <div class="desc-warp">
       <LoginSwitch :loginimg="loginimg" :isParking="isParking" />
@@ -146,6 +155,8 @@ export default {
       }
     };
     return {
+      drawer: false,
+      direction: "rtl",
       isParking: true,
       loginimg: "reg.svg",
       regForm: {
@@ -233,6 +244,13 @@ export default {
     };
   },
   methods: {
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
     register(regForm) {
       this.$refs[regForm].validate((valid) => {
         if (valid) {

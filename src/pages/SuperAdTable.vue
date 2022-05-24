@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <TableAdd :addtable="addtable" />
+    <!-- <TableAdd :addtable="addtable" /> -->
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -10,6 +10,12 @@
       :row-key="getRowkey"
     >
       <TableColumn :columnsprops="columnsprops" :editRow="editRow" />
+      <TableEdit
+        :editRow="editRow"
+        :handleSave="handleSave"
+        :handleDelete="handleDelete"
+        :handleEdit="handleEdit"
+      />
     </el-table>
     <TablePagination
       :pageSize="pageSize"
@@ -20,17 +26,18 @@
   </div>
 </template>
 <script>
-import TableAdd from "../components/TableAdd.vue";
+// import TableAdd from "../components/TableAdd.vue";
 import TableColumn from "@/components/TableColumn.vue";
 
 import TablePagination from "@/components/TablePagination.vue";
+import TableEdit from "@/components/TableEdit.vue";
 
 import { nanoid } from "nanoid";
 export default {
   components: {
-    TableAdd,
     TableColumn,
     TablePagination,
+    TableEdit,
   },
   data() {
     return {
@@ -40,12 +47,14 @@ export default {
       pageSize: 18,
       currentPage: 1,
       editRow: null,
-    //   （停车场省市区，停车场名，停车场管理员用户名，停车场车位数）
+      //   （停车场省市区，停车场名，停车场管理员用户名，停车场车位数）
       columnsprops: [
         { prop: "id", label: "停车场编号" },
         { prop: "city", label: "城市" },
         { prop: "userad", label: "停车场管理员用户名" },
         { prop: "carnumber", label: "停车场车位数" },
+        { prop: "lng", label: "经度" },
+        { prop: "lat", label: "纬度" },
       ],
       tableData: [
         {
@@ -53,24 +62,32 @@ export default {
           city: "天津",
           userad: "ssss",
           carnumber: 360,
+          lng: "121",
+          lat: "39",
         },
         {
           id: nanoid(),
           city: "天津",
           userad: "ssss",
           carnumber: 360,
+          lng: "121",
+          lat: "39",
         },
         {
           id: nanoid(),
           city: "天津",
           userad: "ssss",
           carnumber: 360,
+          lng: "121",
+          lat: "39",
         },
         {
           id: nanoid(),
           city: "天津",
           userad: "ssss",
           carnumber: 360,
+          lng: "121",
+          lat: "39",
         },
       ],
     };
