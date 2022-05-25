@@ -17,24 +17,6 @@
             style="height: 25px; width: 25px"
           />
         </el-badge>
-        <img
-          src="../assets/search.png"
-          alt=""
-          style="height: 25px; width: 25px; margin-left: 35px"
-          @click="search(), switchpage()"
-        />
-        <div
-          style="width: 250px; margin-left: 15px"
-          v-if="isSearch"
-          @keyup.enter="getvalue(input)"
-        >
-          <el-input
-            placeholder="查询停车场城市"
-            v-model="input"
-            clearable
-          >
-          </el-input>
-        </div>
         <div class="username" v-if="getLogin">
           <div class="name">{{ getUser.name }},</div>
           <div style="color: gery; font-size: 10px">hello!</div>
@@ -74,8 +56,6 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      isSearch: false,
-      input: "",
       icon: ["myed.png", "like.png", "ques.png"],
     };
   },
@@ -88,17 +68,7 @@ export default {
         this.setloginState(false);
         this.$router.push("/login");
       }
-    },
-    search() {
-      this.isSearch = !this.isSearch;
-    },
-    switchpage() {
-      if (this.getloginAd == "ParkingAd") this.$router.push("/HomeThird");
-      else this.$router.push("/superhome/table");
-    },
-    getvalue(input) {
-      this.$bus.$emit("getSearchVal", input);
-    },
+    }
   },
   computed: {
     ...mapGetters(["getUser", "getLogin", "getUserimg", "getloginAd"]),

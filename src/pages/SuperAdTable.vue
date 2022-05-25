@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Search :placeholder="placeholder" />
     <!-- <TableAdd :addtable="addtable" /> -->
     <el-table
       :data="
@@ -28,7 +29,7 @@
 <script>
 // import TableAdd from "../components/TableAdd.vue";
 import TableColumn from "@/components/TableColumn.vue";
-
+import Search from "@/components/SearchInput.vue";
 import TablePagination from "@/components/TablePagination.vue";
 import TableEdit from "@/components/TableEdit.vue";
 
@@ -38,9 +39,11 @@ export default {
     TableColumn,
     TablePagination,
     TableEdit,
+    Search,
   },
   data() {
     return {
+      placeholder: "输入城市 / 管理员用户名",
       searchVal: "",
       isSave: true,
       isDelete: true,
@@ -59,8 +62,8 @@ export default {
       tableData: [
         {
           id: nanoid(),
-          city: "天津",
-          userad: "ssss",
+          city: "上海",
+          userad: "123",
           carnumber: 360,
           lng: "121",
           lat: "39",
@@ -75,7 +78,7 @@ export default {
         },
         {
           id: nanoid(),
-          city: "天津",
+          city: "北京",
           userad: "ssss",
           carnumber: 360,
           lng: "121",
@@ -83,7 +86,7 @@ export default {
         },
         {
           id: nanoid(),
-          city: "天津",
+          city: "北京",
           userad: "ssss",
           carnumber: 360,
           lng: "121",
@@ -143,7 +146,7 @@ export default {
   computed: {
     filterData() {
       return this.tableData.filter((p) => {
-        return p.city.indexOf(this.searchVal) !== -1;
+        return p.city.indexOf(this.searchVal) !== -1 || p.userad.indexOf(this.searchVal) !== -1;
       });
     },
   },

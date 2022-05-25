@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Search :placeholder="placeholder" />
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -26,16 +27,19 @@
 <script>
 import TableColumn from "@/components/TableColumn.vue";
 import TablePagination from "@/components/TablePagination.vue";
+import Search from "@/components/SearchInput.vue";
 import { mapGetters } from "vuex";
 import { nanoid } from "nanoid";
 export default {
   components: {
     TableColumn,
     TablePagination,
+    Search,
   },
 
   data() {
     return {
+      placeholder: "输入停车场名 / 停车场编号 / 订单编号",
       ispay: true,
       searchVal: "",
       isSave: true,
@@ -57,8 +61,8 @@ export default {
       tableData: [
         {
           orderid: nanoid(),
-          parkingid:nanoid(),
-          parkingname:"xxx",
+          parkingid: nanoid(),
+          parkingname: "123",
           phone: 123456,
           id: "津2020",
           start: "2022-04-19 13:23:28",
@@ -68,8 +72,8 @@ export default {
         },
         {
           orderid: nanoid(),
-          parkingid:nanoid(),
-          parkingname:"xxx",
+          parkingid: nanoid(),
+          parkingname: "123",
           phone: 123456,
           id: "津2021",
           start: "2022-04-19 13:23:28",
@@ -79,8 +83,8 @@ export default {
         },
         {
           orderid: nanoid(),
-          parkingid:nanoid(),
-          parkingname:"xxx",
+          parkingid: nanoid(),
+          parkingname: "xxx",
           phone: 123456,
           id: "津1021",
           start: "2022-04-19 13:23:28",
@@ -114,7 +118,11 @@ export default {
     ...mapGetters(["getloginAd"]),
     filterData() {
       return this.tableData.filter((p) => {
-        return p.id.indexOf(this.searchVal) !== -1;
+        return (
+          p.parkingname.indexOf(this.searchVal) !== -1 ||
+          p.orderid.indexOf(this.searchVal) !== -1 ||
+          p.parkingid.indexOf(this.searchVal) !== -1
+        );
       });
     },
   },

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Search :placeholder="placeholder" />
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -21,15 +22,18 @@
 <script>
 import TableColumn from "@/components/TableColumn.vue";
 import TablePagination from "@/components/TablePagination.vue";
+import Search from "@/components/SearchInput.vue";
 
 import { nanoid } from "nanoid";
 export default {
   components: {
     TableColumn,
     TablePagination,
+    Search,
   },
   data() {
     return {
+      placeholder: "输入进入时间 / 离开时间 / 车牌号",
       searchVal: "",
       isSave: true,
       isDelete: true,
@@ -38,8 +42,9 @@ export default {
       editRow: null,
       columnsprops: [
         { prop: "city", label: "城市" },
-        { prop: "entertime", label: "进入时间" },
-        { prop: "leavetime", label: "离开时间" },
+        { prop: "id", label: "车牌号" },
+        { prop: "start", label: "进入时间" },
+        { prop: "leave", label: "离开时间" },
         { prop: "price", label: "价格" },
       ],
       tableData: [
@@ -47,36 +52,36 @@ export default {
           id: nanoid(),
           city: "天津",
           price: "25",
-          entertime: "2022-05-20 20:14:21",
-          leavetime: "2022-05-10 21:20:34",
+          start: "2022-05-21 20:14:21",
+          leave: "2022-05-21 22:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
           price: "25",
-          entertime: "2022-05-20 20:14:21",
-          leavetime: "2022-05-10 21:20:34",
+          start: "2022-05-20 20:14:21",
+          leave: "2022-05-20 22:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
           price: "25",
-          entertime: "2022-05-20 20:14:21",
-          leavetime: "2022-05-10 21:20:34",
+          start: "2022-05-20 16:14:21",
+          leave: "2022-05-20 21:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
           price: "25",
-          entertime: "2022-05-20 20:14:21",
-          leavetime: "2022-05-10 21:20:34",
+          start: "2022-05-20 20:14:21",
+          leave: "2022-05-23 21:20:34",
         },
         {
           id: nanoid(),
           city: "天津",
           price: "25",
-          entertime: "2022-05-20 20:14:21",
-          leavetime: "2022-05-10 21:20:34",
+          start: "2022-05-20 22:14:21",
+          leave: "2022-05-10 23:20:34",
         },
       ],
     };
@@ -103,7 +108,11 @@ export default {
   computed: {
     filterData() {
       return this.tableData.filter((p) => {
-        return p.city.indexOf(this.searchVal) !== -1;
+        return (
+          p.start.indexOf(this.searchVal) !== -1 ||
+          p.leave.indexOf(this.searchVal) !== -1 ||
+          p.id.indexOf(this.searchVal) !== -1
+        );
       });
     },
   },

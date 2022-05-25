@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Search :placeholder="placeholder" />
     <el-table
       :data="
         filterData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -27,18 +28,20 @@
 import TableColumn from "@/components/TableColumn.vue";
 // import TableEdit from "@/components/TableEdit.vue";
 import TablePagination from "@/components/TablePagination.vue";
+import Search from "@/components/SearchInput.vue";
 import { mapGetters } from "vuex";
 import { nanoid } from "nanoid";
 export default {
-  
   components: {
     TableColumn,
     // TableEdit,
     TablePagination,
+    Search,
   },
-  
+
   data() {
     return {
+      placeholder: "输入进入时间 / 离开时间 / 车牌号",
       ispay: true,
       searchVal: "",
       isSave: true,
@@ -59,29 +62,29 @@ export default {
       ],
       tableData: [
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
           phone: 123456,
           id: "津2020",
-          start: "2022-04-19 13:23:28",
+          start: "2022-04-19 15:23:28",
           leave: "2022-04-19 18:13:48",
           state: "进行中",
           pay: "40",
         },
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
           phone: 123456,
           id: "津2021",
           start: "2022-04-19 13:23:28",
-          leave: "2022-04-19 18:13:48",
+          leave: "2022-04-20 18:13:48",
           state: "已完成",
           pay: "40",
         },
         {
-          orderid:nanoid(),
+          orderid: nanoid(),
           phone: 123456,
           id: "津1021",
-          start: "2022-04-19 13:23:28",
-          leave: "2022-04-19 18:13:48",
+          start: "2022-04-19 12:21:28",
+          leave: "2022-04-21 18:13:48",
           state: "未支付",
           pay: "40",
         },
@@ -106,31 +109,15 @@ export default {
     getRowkey(row) {
       return row.id;
     },
-    // handleEdit(row) {
-    //   if (this.isSave !== false || this.isDelete !== false) {
-    //     this.editRow = row;
-    //     this.isSave = false;
-    //     this.isDelete = false;
-    //   } else {
-    //     alert("还没有保存");
-    //   }
-    // },
-    // handleSave() {
-    //   this.editRow = null;
-    //   this.isSave = true;
-    // },
-    // handleDelete(id) {
-    //   this.tableData = this.tableData.filter((data) => data.id !== id);
-    //   this.editRow = null;
-    //   this.isDelete = true;
-    // },
   },
   computed: {
     ...mapGetters(["getloginAd"]),
     filterData() {
       return this.tableData.filter((p) => {
         return (
-          p.id.indexOf(this.searchVal) !== -1 
+          p.id.indexOf(this.searchVal) !== -1 ||
+          p.leave.indexOf(this.searchVal) !== -1 ||
+          p.start.indexOf(this.searchVal) !== -1
         );
       });
     },
