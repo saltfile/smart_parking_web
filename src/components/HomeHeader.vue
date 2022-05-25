@@ -62,11 +62,11 @@ export default {
   methods: {
     ...mapMutations(["setUser", "setIsLogin", "setloginState", "setUserimg"]),
     handleCommand(command) {
-      if (command == "a") this.$router.push("/login");
+      if (command == "a") this.$router.push("/");
       else if (command == "b") this.$router.push("/register");
       else if (command == "c") {
         this.setloginState(false);
-        this.$router.push("/login");
+        this.$router.push("/");
       }
     }
   },

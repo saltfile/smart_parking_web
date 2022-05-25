@@ -19,10 +19,14 @@ export default new VueRouter({
 	routes: [
 		{
 			path: '/',
+			component: login,
+		},
+		{
+			path: '/Home',
 			component: home,
 			children: [
 				{
-					path: '/',
+					path: '/Home',
 					component: main
 				},
 				{
@@ -38,10 +42,6 @@ export default new VueRouter({
 					component: HomeFourth
 				}
 			]
-		},
-		{
-			path: '/login',
-			component: login
 		},
 		{
 			path: '/register',

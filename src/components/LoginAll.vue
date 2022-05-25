@@ -36,7 +36,7 @@ export default {
         //   message: "登录成功",
         //   type: "success",
         // });
-        this.$router.push("/");
+        this.$router.push("/Home");
       } else {
         this.setloginAd("SuperAd");
         this.$router.push("/superhome");

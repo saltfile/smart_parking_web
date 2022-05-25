@@ -24,7 +24,7 @@ export default {
         { name: "车流记录", icon: "el-icon-edit" },
         { name: "订单记录", icon: "el-icon-shopping-bag-1" },
       ],
-      routers: ["/", "HomeSecond", "/HomeThird", "/HomeFourth"],
+      routers: ["/Home", "HomeSecond", "/HomeThird", "/HomeFourth"],
     };
   },
 };
