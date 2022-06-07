@@ -18,21 +18,24 @@
         v-if="window"
         :position="window.position"
         :visible="window.visible"
+        :content="window.content"
         :offset="window.offset"
         :events="window.events"
-        :content="window.content"
         :close-when-click-map="true"
       >
+        <MapContent v-show="showInfoWindow" :getItem="getItem" :markerPrice="markerPrice" />
       </el-amap-info-window>
     </el-amap>
   </div>
 </template>
 
 <script>
-
+import MapContent from "@/components/MapContent.vue";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
+      showInfoWindow: false,
       zoom: 6,
       center: [117.037107, 35.71569],
       showIndoorMap: false,
@@ -40,68 +43,16 @@ export default {
       markers: [],
       windows: [],
       window: "",
-      pointMarker: [
-        {
-          lng: 117.201509,
-          lat: 39.085318,
-          stationName: "xxx停车场",
-          stationAddress: "天津市东100m",
-          parkingSpaces: 500,
-          Space: 240,
-          price: 8,
-        },
-        {
-          lng: 121.126757,
-          lat: 31.140653,
-          stationName: "xxx停车场",
-          stationAddress: "上海市牛头山路东100m",
-          parkingSpaces: 500,
-          Space: 240,
-          price: 5,
-        },
-        {
-          lng: 121.126757,
-          lat: 31.140653,
-          stationName: "xxx停车场",
-          stationAddress: "上海市牛头山路东100m",
-          parkingSpaces: 500,
-          Space: 240,
-          price: 10,
-        },
-        {
-          lng: 113.672544,
-          lat: 37.138809,
-          stationName: "xxx停车场",
-          stationAddress: "上海市牛头山路东100m",
-          parkingSpaces: 500,
-          Space: 240,
-          price: 8,
-        },
-        {
-          lng: 112.065793,
-          lat: 38.057122,
-          stationName: "xxx停车场",
-          stationAddress: "上海市牛头山路东100m",
-          parkingSpaces: 500,
-          Space: 240,
-          price: 6,
-        },
-      ],
+      windowkey: "",
     };
   },
-  created() {
-    window.changePrice = this.changePrice;
-    window.saveVal = this.saveVal; // content 中的点击事件方法
-  },
   methods: {
+    ...mapMutations(['setPrice','setItem','setIndex']),
     point() {
       let markers = [];
       let windows = [];
       let that = this;
-      let infoWindow = new AMap.InfoWindow({
-        content: that.$refs.infoWindow.$el,
-      });
-      let pointMarker = that.pointMarker;
+      let pointMarker = that.getMarker;
       pointMarker.forEach((item, index) => {
         markers.push({
           position: [item.lng, item.lat],
@@ -111,23 +62,18 @@ export default {
                 window.visible = false; //关闭窗体
               });
               that.window = that.windows[index];
+              that.setItem(item)
+              that.setIndex(index)
               that.$nextTick(() => {
-                that.showinfoWindow = true;
-                that.window.visible = true; //点击点坐标，出现信息窗体
+                that.showInfoWindow = true;
+                // that.showinfoWindow = true;
+                that.window.visible = true;
               });
             },
           },
         });
         windows.push({
           position: [item.lng, item.lat],
-          content: 
-        `
-          <div>停车场名称：${item.stationName}</div>
-          <div>停车场位置：${item.stationAddress}</div>
-          <div>车位总数量：<span style='color: #66A0FF'>${item.parkingSpaces}</span></div>
-          <div>剩余车位数量：<span style='color: #66A0FF'>${item.Space}</span></div>
-          <div>价格：<span v-if="!change" style='color: #66A0FF'>${item.price}</div>
-          <button onclick="changePrice('${index}')">修改价格</button>`,
           offset: [5, -15],
           visible: false, //初始是否显示
         });
@@ -137,32 +83,19 @@ export default {
       //生成弹窗
       this.windows = windows;
     },
-    changePrice(item) {
-      this.window.content = `
-            <div>停车场名称：${this.pointMarker[item].stationName}</div>
-            <div>停车场位置：${this.pointMarker[item].stationAddress}</div>
-            <div>车位总数量：<span style='color: #66A0FF'>${this.pointMarker[item].parkingSpaces}</span></div>
-            <div>剩余车位数量：<span style='color: #66A0FF'>${this.pointMarker[item].Space}</span></div>
-            <div>价格： <input value='${this.pointMarker[item].price}' onkeydown="if(event.keyCode==13) saveVal(value,'${item}')"></input></div>`;
-    },
-    saveVal(value, index) {
-      this.pointMarker[index].price = value;
-      this.window.content = `
-            <div>停车场名称：${this.pointMarker[index].stationName}</div>
-            <div>停车场位置：${this.pointMarker[index].stationAddress}</div>
-            <div>车位总数量：<span style='color: #66A0FF'>${this.pointMarker[index].parkingSpaces}</span></div>
-            <div>剩余车位数量：<span style='color: #66A0FF'>${this.pointMarker[index].Space}</span></div>
-            <div>价格：<span style='color: #66A0FF'>${this.pointMarker[index].price}</div>
-            <button onclick="changePrice('${index}')">修改价格</button>`;
-    },
+    markerPrice(val){
+      this.setPrice(val)
+    }
   },
   mounted() {
     setTimeout(() => {
       this.point();
     }, 500);
-    console.log(this)
   },
-
+  computed: {
+    ...mapGetters(["getMarker","getItem"])
+  },
+  components: { MapContent },
 };
 </script>
 
