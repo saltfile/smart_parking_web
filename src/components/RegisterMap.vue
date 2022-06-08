@@ -11,8 +11,6 @@
       class="amap-demo"
     >
     </el-amap>
-    <!-- <p>{{ address }}</p>
-    <p>{{ center }}</p> -->
   </div>
 </template>
 <script>

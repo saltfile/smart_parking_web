@@ -10,7 +10,7 @@
     <div>
       剩余车位数量：<span style="color: #66a0ff">{{ getItem.Space }}</span>
     </div>
-    <div>
+    <div @keyup.enter="savePrice()">
       价格：
       <span v-if="!change" style="color: #66a0ff">{{ getItem.price }}</span>
       <el-input
@@ -22,7 +22,7 @@
     </div>
     <el-button style="margin-top: 10px" @click="changePrice()" v-if="!change"
       >修改价格</el-button>
-      <el-button style="margin-top: 10px" @click.stop="savePrice()" v-else
+      <el-button style="margin-top: 10px" @click="savePrice()" v-else
       >保存</el-button>
   </div>
 </template>
@@ -45,7 +45,6 @@ export default {
       });
     },
     savePrice() {
-      console.log(this.price)
       this.change = false;
       this.markerPrice(this.price)
     },
