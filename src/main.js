@@ -15,8 +15,7 @@ import {VueJsonp} from 'vue-jsonp'
 
 Vue.use(VueJsonp)
 
-Vue.use(vRegion)
-
+Vue.use(vRegion) 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(ElementUI);

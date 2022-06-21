@@ -1,5 +1,5 @@
 <template>
-  <div class="amap-page-container" style="width: 30vw; height: 100%">
+  <div class="amap-page-container" style="width: 30vw; height: 95%">
     <el-amap
       ref="map"
       vid="amapDemo"
@@ -19,8 +19,8 @@ let amapManager = new AMapManager();
 export default {
   props: ["optionCity"],
   mounted() {
-      this.$bus.$on("onSearchResult",this.onSearchResult)
-      this.$bus.$on('sendCenter')
+    this.$bus.$on("onSearchResult", this.onSearchResult);
+    this.$bus.$on("sendCenter");
   },
   data() {
     const self = this;
@@ -38,8 +38,7 @@ export default {
       center: [117.201509, 39.085318],
       events: {
         init: (o) => {
-          o.getCity((result) => {
-          });
+          o.getCity((result) => {});
         },
         click: (e) => {
           self.lng = e.lnglat.lng;
@@ -59,7 +58,7 @@ export default {
           geocoder.getAddress(e.lnglat, function (status, result) {
             if (status === "complete" && result.regeocode) {
               self.address = result.regeocode.formattedAddress;
-              console.log(self.address);
+              self.sendAddress(self.address)
             } else {
               console.log("根据经纬度查询地址失败");
             }
@@ -119,15 +118,17 @@ export default {
               });
               that.marker.setMap(o);
             }
-            that.marker.setPosition(that.center);
+            alert(that.center)
           } else {
             console.log("根据地址查询位置失败");
           }
         });
       });
     },
+    sendAddress(address){
+       this.$bus.$emit('submitAddress',address)
+    }
   },
-  
 };
 </script>
 <style scoped>

@@ -73,7 +73,6 @@
             @click="searchMap(), (drawer = true)"
           ></el-button>
         </el-form-item>
-
         <el-button class="submit-btn" @click="register('regForm')"
           >注册</el-button
         >
@@ -86,6 +85,13 @@
         :modal-append-to-body="false"
       >
         <Map :optionCity="regForm.optionCity" />
+        <el-button
+          icon="el-icon-check"
+          type="warning"
+          circle
+          @click="submitAddress"
+          style="margin-left: 10px;margin-right: 10px;;margin-top: 2px;float: right;"
+        >确认</el-button>
       </el-drawer>
     </div>
     <div class="desc-warp">
@@ -97,7 +103,6 @@
 <script>
 import LoginSwitch from "../components/LoginSwitch.vue";
 import Map from "../components/RegisterMap.vue";
-
 export default {
   components: {
     Map,
@@ -168,6 +173,7 @@ export default {
         parkname: "",
         optionCity: "",
       },
+      address:"",
       codeStr: "",
       codeChars: [
         0,
@@ -285,9 +291,19 @@ export default {
     searchMap() {
       this.$bus.$emit("onSearchResult");
     },
+    submitAddress(address){
+      this.address = address
+      // this.$nextTick(function(){
+      //   alert(this.address)
+      // })
+    }
   },
   mounted() {
     this.createCode();
+    this.$bus.$on('submitAddress',this.submitAddress)
+  },
+  beforeDestroy() {
+    this.$bus.$off('submitAddress',this.submitAddress)
   },
 };
 </script>
