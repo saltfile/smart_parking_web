@@ -65,13 +65,15 @@
           />
         </el-form-item>
         <el-form-item>
-          <v-region @values="regionChange"></v-region>
-          <el-button
-            icon="el-icon-check"
-            circle
-            style="margin-left: 10px"
-            @click="searchMap(), (drawer = true)"
-          ></el-button>
+          <div style="display: flex; flex-direction: row">
+            <v-region  @change="regionChange"></v-region>
+            <el-button
+              icon="el-icon-check"
+              circle
+              style="margin-left: 10px"
+              @click="searchMap(), (drawer = true)"
+            ></el-button>
+          </div>
         </el-form-item>
         <el-button class="submit-btn" @click="register('regForm')"
           >注册</el-button
@@ -88,10 +90,15 @@
         <el-button
           icon="el-icon-check"
           type="warning"
-          circle
           @click="submitAddress"
-          style="margin-left: 10px;margin-right: 10px;;margin-top: 2px;float: right;"
-        >确认</el-button>
+          style="
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 2px;
+            float: right;
+          "
+          >确认</el-button
+        >
       </el-drawer>
     </div>
     <div class="desc-warp">
@@ -103,6 +110,9 @@
 <script>
 import LoginSwitch from "../components/LoginSwitch.vue";
 import Map from "../components/RegisterMap.vue";
+import Vue from "vue";
+import { RegionSelects } from "v-region";
+Vue.component("v-region", RegionSelects);
 export default {
   components: {
     Map,
@@ -173,7 +183,7 @@ export default {
         parkname: "",
         optionCity: "",
       },
-      address:"",
+      address: "",
       codeStr: "",
       codeChars: [
         0,
@@ -291,19 +301,19 @@ export default {
     searchMap() {
       this.$bus.$emit("onSearchResult");
     },
-    submitAddress(address){
-      this.address = address
+    submitAddress(address) {
+      this.address = address;
       // this.$nextTick(function(){
       //   alert(this.address)
       // })
-    }
+    },
   },
   mounted() {
     this.createCode();
-    this.$bus.$on('submitAddress',this.submitAddress)
+    this.$bus.$on("submitAddress", this.submitAddress);
   },
   beforeDestroy() {
-    this.$bus.$off('submitAddress',this.submitAddress)
+    this.$bus.$off("submitAddress", this.submitAddress);
   },
 };
 </script>
@@ -332,7 +342,7 @@ export default {
 }
 
 .form-warp {
-  width: 70%;
+  width: 50%;
   position: absolute;
   z-index: 5;
   left: 75%;
@@ -367,7 +377,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 35px;
   /* 将两个 form 布局在 grid 同一位置 */
   grid-row: 1 / 2;
   grid-column: 1 / 2;
@@ -415,8 +425,10 @@ export default {
 }
 .el-input {
   min-width: 300px;
+  font-size: 18px;
+  height: 50px;
+  width: 350px;
 }
-
 .el-input::placeholder {
   color: #cccc;
 }

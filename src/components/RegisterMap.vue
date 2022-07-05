@@ -1,5 +1,5 @@
 <template>
-  <div class="amap-page-container" style="width: 30vw; height: 95%">
+  <div class="amap-page-container" style="width: 30vw; height: 100%">
     <el-amap
       ref="map"
       vid="amapDemo"
@@ -118,7 +118,6 @@ export default {
               });
               that.marker.setMap(o);
             }
-            alert(that.center)
           } else {
             console.log("根据地址查询位置失败");
           }

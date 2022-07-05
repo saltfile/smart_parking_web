@@ -4,6 +4,7 @@
       src="../assets/search.png"
       alt=""
       style="height: 25px; width: 25px; margin-top: 7px"
+      @click="getvalue(input)"
     />
     <div style="width: 280px; margin-left: 15px" @keyup.enter="getvalue(input)">
       <el-input :placeholder="placeholder" v-model="input" clearable>

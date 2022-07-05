@@ -6,16 +6,26 @@ import VueRouter from 'vue-router'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import vRegion from 'v-region'
+
 import store from './store'
 
 //高德地图
 import VueAMap from 'vue-amap'; 
 import {VueJsonp} from 'vue-jsonp'
+import Region from 'v-region'
+/**
+ * Globally register region components
+ * v-region-group
+ * v-region-selects
+ * v-region-columns
+ * v-region-city-picker
+ * v-region-text
+ */
+Vue.use(Region)
 
 Vue.use(VueJsonp)
 
-Vue.use(vRegion) 
+
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(ElementUI);
