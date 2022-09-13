@@ -1,9 +1,10 @@
 <template>
   <div class="search">
+    <el-button @click="getAll()">查看全部</el-button>
     <img
       src="../assets/search.png"
       alt=""
-      style="height: 25px; width: 25px; margin-top: 7px"
+      style="height: 25px; width: 25px; margin-top: 7px;margin-left: 20px;"
       @click="getvalue(input)"
     />
     <div style="width: 280px; margin-left: 15px" @keyup.enter="getvalue(input)">
@@ -25,13 +26,16 @@ export default {
     getvalue(input) {
       this.$bus.$emit("getSearchVal", input);
     },
+    getAll() {
+      this.$bus.$emit("getSearchVal", "");
+    },
   },
 };
 </script>
 
 <style scoped>
 .search {
-  padding-left: 75%;
+  padding-left: 70%;
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;

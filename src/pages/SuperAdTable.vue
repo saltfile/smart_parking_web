@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <Search :placeholder="placeholder" />
+    <div style="display: flex; flex-direction: row">
+      <div style="flex: 1"></div>
+      <Search :placeholder="placeholder" />
+    </div>
     <!-- <TableAdd :addtable="addtable" /> -->
     <el-table
       :data="
@@ -53,6 +56,7 @@ export default {
       //   （停车场省市区，停车场名，停车场管理员用户名，停车场车位数）
       columnsprops: [
         { prop: "id", label: "停车场编号" },
+        { prop: "stopingname", label: "停车场名" },
         { prop: "city", label: "城市" },
         { prop: "userad", label: "停车场管理员用户名" },
         { prop: "carnumber", label: "停车场车位数" },
@@ -62,6 +66,7 @@ export default {
       tableData: [
         {
           id: nanoid(),
+          stopingname: "这里是名字",
           city: "上海",
           userad: "123",
           carnumber: 360,
@@ -70,6 +75,7 @@ export default {
         },
         {
           id: nanoid(),
+          stopingname: "这里是名字",
           city: "天津",
           userad: "ssss",
           carnumber: 360,
@@ -78,6 +84,7 @@ export default {
         },
         {
           id: nanoid(),
+          stopingname: "这里是名字",
           city: "北京",
           userad: "ssss",
           carnumber: 360,
@@ -86,6 +93,7 @@ export default {
         },
         {
           id: nanoid(),
+          stopingname: "这里是名字",
           city: "北京",
           userad: "ssss",
           carnumber: 360,
@@ -146,7 +154,10 @@ export default {
   computed: {
     filterData() {
       return this.tableData.filter((p) => {
-        return p.city.indexOf(this.searchVal) !== -1 || p.userad.indexOf(this.searchVal) !== -1;
+        return (
+          p.city.indexOf(this.searchVal) !== -1 ||
+          p.userad.indexOf(this.searchVal) !== -1
+        );
       });
     },
   },

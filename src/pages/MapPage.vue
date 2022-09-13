@@ -23,7 +23,7 @@
         :events="window.events"
         :close-when-click-map="true"
       >
-        <MapContent v-show="showInfoWindow" :getItem="getItem" :markerPrice="markerPrice" />
+        <MapContent v-show="showInfoWindow" :getItem="getItem" :markerPrice="markerPrice" :window="window" />
       </el-amap-info-window>
     </el-amap>
   </div>
@@ -47,7 +47,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['setPrice','setItem','setIndex']),
+    ...mapMutations(['setPrice','setItem','setIndex','setName','setAddress','setParkingSpaces','setSpace']),
     point() {
       let markers = [];
       let windows = [];
@@ -83,8 +83,12 @@ export default {
       //生成弹窗
       this.windows = windows;
     },
-    markerPrice(val){
-      this.setPrice(val)
+    markerPrice(price,name,address,allspaces,onlyspaces){
+      this.setPrice(price)
+      this.setName(name)
+      this.setAddress(address)
+      this.setParkingSpaces(allspaces)
+      this.setSpace(onlyspaces)
     }
   },
   mounted() {

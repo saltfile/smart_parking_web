@@ -1,5 +1,5 @@
 <template>
-  <div class="amap-page-container" style="width: 30vw; height: 100%">
+  <div class="amap-page-container" style="width: 30vw; height: 95%">
     <el-amap
       ref="map"
       vid="amapDemo"

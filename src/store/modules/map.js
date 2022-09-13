@@ -4,6 +4,18 @@ export default {
         setItem(state, value) {
             state.infoItem = value
         },
+        setName(state,value){
+            state.Marker[state.infoIndex].stationName = value
+        },
+        setAddress(state,value){
+            state.Marker[state.infoIndex].stationAddress = value
+        },
+        setParkingSpaces(state,value){
+            state.Marker[state.infoIndex].parkingSpaces = value
+        },
+        setSpace(state,value){
+            state.Marker[state.infoIndex].Space = value
+        },
         setPrice(state,value){
             state.Marker[state.infoIndex].price = value
         },
