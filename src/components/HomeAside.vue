@@ -4,7 +4,7 @@
       <div class="logo">
         <img src="../assets/logo.png" style="height: 50px; width: 50px" />
       </div>
-      <div class="title">智慧停车</div>
+      <div class="title">玉衡系统</div>
       <div class="icon">
         <img
           src="../assets/parking.png"

@@ -23,7 +23,12 @@
         :events="window.events"
         :close-when-click-map="true"
       >
-        <MapContent v-show="showInfoWindow" :getItem="getItem" :markerPrice="markerPrice" :window="window" />
+        <MapContent
+          v-show="showInfoWindow"
+          :getItem="getItem"
+          :markerPrice="markerPrice"
+          :window="window"
+        />
       </el-amap-info-window>
     </el-amap>
   </div>
@@ -47,7 +52,15 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['setPrice','setItem','setIndex','setName','setAddress','setParkingSpaces','setSpace']),
+    ...mapMutations([
+      "setPrice",
+      "setItem",
+      "setIndex",
+      "setName",
+      "setAddress",
+      "setParkingSpaces",
+      "setSpace",
+    ]),
     point() {
       let markers = [];
       let windows = [];
@@ -62,8 +75,8 @@ export default {
                 window.visible = false; //关闭窗体
               });
               that.window = that.windows[index];
-              that.setItem(item)
-              that.setIndex(index)
+              that.setItem(item);
+              that.setIndex(index);
               that.$nextTick(() => {
                 that.showInfoWindow = true;
                 // that.showinfoWindow = true;
@@ -83,13 +96,13 @@ export default {
       //生成弹窗
       this.windows = windows;
     },
-    markerPrice(price,name,address,allspaces,onlyspaces){
-      this.setPrice(price)
-      this.setName(name)
-      this.setAddress(address)
-      this.setParkingSpaces(allspaces)
-      this.setSpace(onlyspaces)
-    }
+    markerPrice(price, name, address, allspaces, onlyspaces) {
+      this.setPrice(price);
+      this.setName(name);
+      this.setAddress(address);
+      this.setParkingSpaces(allspaces);
+      this.setSpace(onlyspaces);
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -97,11 +110,10 @@ export default {
     }, 500);
   },
   computed: {
-    ...mapGetters(["getMarker","getItem"])
+    ...mapGetters(["getMarker", "getItem"]),
   },
   components: { MapContent },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

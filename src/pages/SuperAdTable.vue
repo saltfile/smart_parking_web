@@ -60,8 +60,8 @@ export default {
         { prop: "city", label: "城市" },
         { prop: "userad", label: "停车场管理员用户名" },
         { prop: "carnumber", label: "停车场车位数" },
-        { prop: "lng", label: "经度" },
-        { prop: "lat", label: "纬度" },
+        { prop: "lng", label: "地点" },
+        { prop: "lat", label: "价格" },
       ],
       tableData: [
         {
@@ -70,7 +70,7 @@ export default {
           city: "上海",
           userad: "123",
           carnumber: 360,
-          lng: "121",
+          lng: "天津市-河西区",
           lat: "39",
         },
         {
@@ -79,7 +79,7 @@ export default {
           city: "天津",
           userad: "ssss",
           carnumber: 360,
-          lng: "121",
+          lng: "天津市-河西区",
           lat: "39",
         },
         {
@@ -88,7 +88,7 @@ export default {
           city: "北京",
           userad: "ssss",
           carnumber: 360,
-          lng: "121",
+          lng: "天津市-河西区",
           lat: "39",
         },
         {
@@ -97,7 +97,7 @@ export default {
           city: "北京",
           userad: "ssss",
           carnumber: 360,
-          lng: "121",
+          lng: "天津市-河西区",
           lat: "39",
         },
       ],

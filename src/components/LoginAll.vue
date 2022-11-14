@@ -4,7 +4,11 @@
     <input placeholder="用户名" />
     <input type="password" placeholder="密码" />
     <div class="submit-btn" @click.stop="parkinglogin">立即登录</div>
-    <a href="javascript:void(0);" v-if="isParking" @click="gotoRegister"
+    <a
+      href="javascript:void(0);"
+      v-if="isParking"
+      @click="gotoRegister"
+      style="text-decoration: none"
       >还没有账号？立即注册</a
     >
   </form>
@@ -19,7 +23,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setUserimg", "setloginState", "setloginAd"]),
-    ...mapGetters(["getloginAd","getToken"]),
+    ...mapGetters(["getloginAd", "getToken"]),
     parkinglogin() {
       this.setloginState(true);
       if (this.isParking) {
@@ -47,9 +51,9 @@ export default {
       this.$router.push("/register");
     },
   },
-  computed:{
+  computed: {
     ...mapGetters(["getUser"]),
-  }
+  },
 };
 </script>
 

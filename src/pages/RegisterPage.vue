@@ -66,7 +66,7 @@
         </el-form-item>
         <el-form-item>
           <div style="display: flex; flex-direction: row">
-            <v-region  @change="regionChange"></v-region>
+            <v-region @change="regionChange"></v-region>
             <el-button
               icon="el-icon-check"
               circle
@@ -81,6 +81,7 @@
       </el-form>
       <el-drawer
         title="我是标题"
+        direction="ltr"
         :visible.sync="drawer"
         :with-header="false"
         :append-to-body="true"
@@ -396,7 +397,7 @@ export default {
 }
 
 .container.sign-up-mode .form-warp {
-  left: 25%;
+  left: 50%;
 }
 
 .container.sign-up-mode .sign-in-form {
@@ -467,6 +468,3 @@ export default {
   background-color: white;
 }
 </style>
-
-      
-   

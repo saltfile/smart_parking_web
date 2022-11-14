@@ -27,8 +27,8 @@
 export default {
   data() {
     return {
-      videoWidth: 1500,
-      videoHeight: 900,
+      videoWidth: 1200,
+      videoHeight: 720,
       imgSrc: "",
       thisCancas: null,
       thisContext: null,
@@ -136,7 +136,7 @@ export default {
 };
 </script>
 <style scoped>
-.button{
-    margin: 20px;
+.button {
+  margin: 20px;
 }
 </style>

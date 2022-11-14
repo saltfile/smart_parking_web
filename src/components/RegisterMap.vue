@@ -58,7 +58,7 @@ export default {
           geocoder.getAddress(e.lnglat, function (status, result) {
             if (status === "complete" && result.regeocode) {
               self.address = result.regeocode.formattedAddress;
-              self.sendAddress(self.address)
+              self.sendAddress(self.address);
             } else {
               console.log("根据经纬度查询地址失败");
             }
@@ -124,9 +124,9 @@ export default {
         });
       });
     },
-    sendAddress(address){
-       this.$bus.$emit('submitAddress',address)
-    }
+    sendAddress(address) {
+      this.$bus.$emit("submitAddress", address);
+    },
   },
 };
 </script>
